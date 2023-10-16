@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Sharing Demo</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="icon" type="image/x-icon" href="../Birb-icon.png">
+    <script src="vigenere.js"></script>
+</head>
+<body>
+    <div id="home"><a href="../index.html">Back to Home</a></div>
+    <h2>Vigenère Cipher</h2> 
+    <p>
+        The Vigenère cipher is a basic substitution cipher that shifts the characters of the original plaintext using a key.
+        This key is an alphabetic character sequence where each character represents a shift amount (A=0, B=1, C=2, etc.).
+        Each character in the plaintext corresponds to a character in the key based on its sequential position.
+        If the plaintext is longer than the key, the key's sequential position wraps around to the beginning, effectively replicating the key until the whole message can be enciphered.
+        Messages are enciphered by shifting each plaintext character to the right by the amount determined by the corresponding key character.
+        Likewise, deciphering a message simply uses the same key to shift characters in the opposite direction.
+    </p>
+
+    <div>
+        <b>Message:</b>
+        <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br>
+
+        <b>Key:</b>
+        <textarea id="key" placeholder="Key"></textarea><br>
+
+        <b>Ciphertext:</b>
+        <textarea id="ciphertext" placeholder="Ciphertext goes here."></textarea><br>
+
+        <script>
+            function cipher(encipher)
+            {
+                let src = encipher? "plaintext" : "ciphertext";
+                let dest = encipher? "ciphertext" : "plaintext";
+                let msg = document.getElementById(src).value;
+                let key = document.getElementById("key").value;
+
+                if (!is_valid_key(key))
+                {
+                    alert("ERROR: Key must be alphabetic.");
+                    return;
+                }
+
+                document.getElementById(dest).value = vigenere(msg, key, encipher);
+            }
+        </script>
+        <button onclick="cipher(true)">Encipher</button>
+        <button onclick="cipher(false)">Decipher</button>
+    </div>
+</body>
