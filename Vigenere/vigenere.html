@@ -23,20 +23,6 @@
         The implementation provided here simply ignores those characters when enciphering and deciphering.
     </p>
 
-    <p>
-        While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
-        Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
-        Consequently, the key can be determined by using character frequency analysis on the slices of the ciphertext that have the same shift amounts.
-        Even if the length of the key isn't known, this analysis can be repeated on various interval lengths to find the most likely key.
-    </p>
-
-    <p>
-        Although character frequency analysis is powerful, its probabilistic nature means it's not infallible.  
-        Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
-        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail.
-        This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
-    </p>
-
     <div>
         <b>Message:</b>
         <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br>
@@ -67,4 +53,41 @@
         <button onclick="cipher(true)">Encipher</button>
         <button onclick="cipher(false)">Decipher</button>
     </div>
+
+    <p>
+        While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
+        Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
+        Consequently, the key can be determined by using character frequency analysis on the slices of the ciphertext that have the same shift amounts.
+        Even if the length of the key isn't known, this analysis can be repeated on various interval lengths to find the most likely key.
+    </p>
+
+    <p>
+        Although character frequency analysis is powerful, its probabilistic nature means it's not infallible.  
+        Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
+        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail.
+        This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
+    </p>
+
+    <div>
+        <b>Ciphertext:</b>
+        <textarea id="ciphertext2" placeholder="Ciphertext goes here."></textarea><br>
+        
+        <script>
+            function crack()
+            {
+                let ciphertext = document.getElementById("ciphertext2").value;
+                let key = crack_vigenere(ciphertext);
+                document.getElementById("key2").value = key;
+                document.getElementById("plaintext2").value = vigenere(ciphertext, key, false);
+            }
+        </script>
+        <button onclick="crack()">Find key</button><br>
+
+        <b>Key:</b>
+        <textarea id="key2" disabled="true" placeholder="Key"></textarea><br>
+
+        <b>Found plaintext:</b>
+        <textarea id="plaintext2" disabled="true"></textarea><br>
+    </div>
+
 </body>
