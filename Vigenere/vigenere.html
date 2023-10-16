@@ -21,6 +21,20 @@
         Likewise, deciphering a message simply uses the same key to shift characters in the opposite direction.
     </p>
 
+    <p>
+        While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
+        Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
+        Consequently, the key can be determined by using character frequency analysis on the slices of the ciphertext that would have the same shift amounts.
+        Even if the length of the key isn't known, this analysis can be repeated on various interval lengths to find the most likely key.
+    </p>
+
+    <p>
+        Although character frequency analysis is powerful, its probabilistic nature means it's not infallible.  
+        Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
+        In the case where the key length is greater than the plaintext length, there will be no repetition at all and character frequency analysis will fail.
+        This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
+    </p>
+
     <div>
         <b>Message:</b>
         <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br>
