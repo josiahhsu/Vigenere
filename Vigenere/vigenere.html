@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vigenère Cipher</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="vigenere.css">
     <link rel="icon" type="image/x-icon" href="../Birb-icon.png">
     <script src="vigenere.js"></script>
 </head>
@@ -28,7 +28,7 @@
         <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br>
 
         <b>Key:</b>
-        <textarea id="key" placeholder="Key"></textarea><br>
+        <input id="key" placeholder="Key"></input><br>
 
         <b>Ciphertext:</b>
         <textarea id="ciphertext" placeholder="Ciphertext goes here."></textarea><br>
@@ -62,7 +62,7 @@
     </p>
 
     <p>
-        Although character frequency analysis is powerful, its probabilistic nature means it's not infallible.  
+        Although character frequency analysis is effective, its probabilistic nature means it's not infallible.  
         Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
         In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail.
         This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
@@ -84,10 +84,10 @@
         <button onclick="crack()">Find key</button><br>
 
         <b>Key:</b>
-        <textarea id="key2" disabled="true" placeholder="Key"></textarea><br>
+        <input id="key2" readonly="true"></input><br>
 
         <b>Found plaintext:</b>
-        <textarea id="plaintext2" disabled="true"></textarea><br>
+        <textarea id="plaintext2" readonly="true"> </textarea><br>
     </div>
 
 </body>
