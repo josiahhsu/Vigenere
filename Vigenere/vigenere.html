@@ -25,15 +25,10 @@
 
     <div>
         <b>Message:</b>
-        <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br>
+        <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br><br>
 
         <b>Key:</b>
-        <input id="key" placeholder="Key"></input><br>
-
-        <b>Ciphertext:</b>
-        <textarea id="ciphertext" placeholder="Ciphertext goes here."></textarea><br>
-
-        <script>
+        <input id="key" placeholder="Key"></input><br><script>
             function cipher(encipher)
             {
                 let src = encipher? "plaintext" : "ciphertext";
@@ -51,7 +46,10 @@
             }
         </script>
         <button onclick="cipher(true)">Encipher</button>
-        <button onclick="cipher(false)">Decipher</button>
+        <button onclick="cipher(false)">Decipher</button><br><br>
+
+        <b>Ciphertext:</b>
+        <textarea id="ciphertext" placeholder="Ciphertext goes here."></textarea><br>
     </div>
 
     <p>
@@ -81,12 +79,12 @@
                 document.getElementById("plaintext2").value = vigenere(ciphertext, key, false);
             }
         </script>
-        <button onclick="crack()">Find key</button><br>
+        <button onclick="crack()">Find key</button><br><br>
 
         <b>Key:</b>
         <input id="key2" readonly="true"></input><br>
 
-        <b>Found plaintext:</b>
+        <b>Deciphered plaintext:</b>
         <textarea id="plaintext2" readonly="true"> </textarea><br>
     </div>
 
