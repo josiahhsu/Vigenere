@@ -1,9 +1,4 @@
-/*Josiah Hsu*/
-body{
-    background-color: beige;
-    color: black;
-    float: left;
-}
+@import url("../main.css");
 
 textarea{
     height: 8em;
