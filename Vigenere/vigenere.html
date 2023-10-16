@@ -16,7 +16,7 @@
         The Vigenère cipher is a basic substitution cipher that shifts the characters of the original plaintext using a key.
         This key is an alphabetic character sequence where each character represents a shift amount (A=0, B=1, C=2, etc.).
         Each character in the plaintext corresponds to a character in the key based on its sequential position.
-        If the plaintext is longer than the key, the key's sequential position wraps around to the beginning, effectively replicating the key until the whole message can be enciphered.
+        If the plaintext is longer than the key, the key's sequential position wraps around to the beginning, effectively replicating the key until it's large enough to encipher the whole message.
         Messages are enciphered by shifting each plaintext character to the right by the amount determined by the corresponding key character.
         Likewise, deciphering a message simply uses the same key to shift characters in the opposite direction.
     </p>
@@ -24,14 +24,14 @@
     <p>
         While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
         Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
-        Consequently, the key can be determined by using character frequency analysis on the slices of the ciphertext that would have the same shift amounts.
+        Consequently, the key can be determined by using character frequency analysis on the slices of the ciphertext that have the same shift amounts.
         Even if the length of the key isn't known, this analysis can be repeated on various interval lengths to find the most likely key.
     </p>
 
     <p>
         Although character frequency analysis is powerful, its probabilistic nature means it's not infallible.  
         Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
-        In the case where the key length is greater than the plaintext length, there will be no repetition at all and character frequency analysis will fail.
+        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail.
         This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
     </p>
 
