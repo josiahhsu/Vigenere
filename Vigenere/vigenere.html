@@ -19,6 +19,8 @@
         If the plaintext is longer than the key, the key's sequential position wraps around to the beginning, effectively replicating the key until it's large enough to encipher the whole message.
         Messages are enciphered by shifting each plaintext character to the right by the amount determined by the corresponding key character.
         Likewise, deciphering a message simply uses the same key to shift characters in the opposite direction.
+        Since this cipher is alphabetic in nature, it does not handle numeric or special characters.
+        The implementation provided here simply ignores those characters when enciphering and deciphering.
     </p>
 
     <p>
