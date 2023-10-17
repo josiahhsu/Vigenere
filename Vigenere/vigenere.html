@@ -19,16 +19,22 @@
         If the plaintext is longer than the key, the key's sequential position wraps around to the beginning, effectively replicating the key until it's large enough to encipher the whole message.
         Messages are enciphered by shifting each plaintext character to the right by the amount determined by the corresponding key character.
         Likewise, deciphering a message simply uses the same key to shift characters in the opposite direction.
-        Since this cipher is alphabetic in nature, it does not handle numeric or special characters.
-        The implementation provided here simply ignores those characters when enciphering and deciphering.
+        Note that since this cipher is alphabetic in nature, it does not handle numeric or special characters.
+    </p>
+
+    <p>
+        This site lets you either encipher or decipher a message with a given key.
+        Enter the plaintext or ciphertext into the respective box alongside the key to be used, then click "Encipher" or "Decipher".
+        The key itself must be purely alphabetic, but the messages are allowed to contain numeric or special characters.
+        They will simply be ignored during the enciphering/deciphering process.
     </p>
 
     <div>
         <b>Message:</b>
-        <textarea id="plaintext" placeholder="Plaintext goes here."></textarea><br><br>
+        <textarea id="plaintext" placeholder="Enter plaintext here."></textarea><br><br>
 
         <b>Key:</b>
-        <input id="key" placeholder="Key"></input><br><script>
+        <input id="key" placeholder="Enter key here."></input><br><script>
             function cipher(encipher)
             {
                 let src = encipher? "plaintext" : "ciphertext";
@@ -49,7 +55,7 @@
         <button onclick="cipher(false)">Decipher</button><br><br>
 
         <b>Ciphertext:</b>
-        <textarea id="ciphertext" placeholder="Ciphertext goes here."></textarea><br>
+        <textarea id="ciphertext" placeholder="Enter ciphertext here."></textarea><br>
     </div>
 
     <p>
@@ -66,9 +72,14 @@
         This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
     </p>
 
+    <p>
+        To decode a ciphertext, enter it below and click "Find key" to analyze the text.
+        The most probable key and its corresponding deciphered text will be displayed below.
+    </p>
+
     <div>
         <b>Ciphertext:</b>
-        <textarea id="ciphertext2" placeholder="Ciphertext goes here."></textarea><br>
+        <textarea id="ciphertext2" placeholder="Enter ciphertext to analyze here."></textarea><br>
         
         <script>
             function crack()
