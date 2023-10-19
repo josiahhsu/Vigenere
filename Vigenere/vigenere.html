@@ -84,10 +84,16 @@
         <script>
             function crack()
             {
+                let key = plaintext = "";
                 let ciphertext = document.getElementById("ciphertext2").value;
-                let key = crack_vigenere(ciphertext);
+                if (ciphertext.length > 0)
+                {
+                    key = crack_vigenere(ciphertext);
+                    plaintext = vigenere(ciphertext, key, false);
+                }
+                
                 document.getElementById("key2").value = key;
-                document.getElementById("plaintext2").value = vigenere(ciphertext, key, false);
+                document.getElementById("plaintext2").value = plaintext;
             }
         </script>
         <button onclick="crack()">Find key</button><br><br>
