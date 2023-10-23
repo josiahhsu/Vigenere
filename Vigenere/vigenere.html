@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="home"><a href="../index.html">Back to Home</a></div>
-    <h2>Vigenère Cipher</h2> 
+    <h2>Using the Vigenère Cipher</h2> 
     <p>
         The Vigenère cipher is a basic substitution cipher that shifts the characters of the original plaintext using a key.
         This key is an alphabetic character sequence where each character represents a shift amount (A=0, B=1, C=2, etc.).
@@ -58,6 +58,7 @@
         <textarea id="ciphertext" placeholder="Enter ciphertext here."></textarea><br>
     </div>
 
+    <h2>Cracking the Vigenère Cipher</h2> 
     <p>
         While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
         Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
@@ -68,18 +69,40 @@
     <p>
         Although character frequency analysis is effective, its probabilistic nature means it's not infallible.  
         Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
-        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail.
-        This special case is known as the one-time pad, and it's said to provide perfect security as long as the key is not reused.
+        Keys that are longer than half the size of the ciphertext will have portions that weren't repeated when enciphering.
+        The corresponding portions of the ciphertext therefore cannot be determind with character frequency analysis.
+        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail completely.
+        This special case is known as a one-time pad, and it can provide perfect security as long as the key is not reused.
     </p>
 
     <p>
         To decode a ciphertext, enter it below and click "Find key" to analyze the text.
         The most probable key and its corresponding deciphered text will be displayed below.
+        Since attempting analysis on larger key sizes becomes ineffective, a maximum key scale factor is provided to limit the search range.
+        This factor defines the maximum key length of analyzed keys relative to the length of the ciphertext.
+        Increasing this factor will allow for analysis on larger keys at the cost of a longer computation time.
     </p>
 
     <div>
         <b>Ciphertext:</b>
         <textarea id="ciphertext2" placeholder="Enter ciphertext to analyze here."></textarea><br>
+        
+        <b>Max Key Scale Factor:</b>
+        <span id="scale_value"></span><br>
+        <script>
+            // function for defining the maximum number of times a given key
+            function update_scale()
+            {
+                let n = document.getElementById("scale").value;
+                document.getElementById("scale_value").innerHTML = Number(n / 100);
+            }
+
+            function get_scale()
+            {
+                return Number(document.getElementById("scale_value").innerHTML);
+            }
+        </script>
+        <input type="range" id="scale" value=10 min=1 max=50 onchange="update_scale()"></input><br>
         
         <script>
             function crack()
@@ -88,13 +111,15 @@
                 let ciphertext = document.getElementById("ciphertext2").value;
                 if (ciphertext.length > 0)
                 {
-                    key = crack_vigenere(ciphertext);
+                    key = crack_vigenere(ciphertext, get_scale());
                     plaintext = vigenere(ciphertext, key, false);
                 }
                 
                 document.getElementById("key2").value = key;
                 document.getElementById("plaintext2").value = plaintext;
             }
+
+            update_scale();
         </script>
         <button onclick="crack()">Find key</button><br><br>
 

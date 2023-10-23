@@ -33,7 +33,7 @@ function vigenere(plaintext, key, encipher)
     return result;
 }
 
-function crack_vigenere(input)
+function crack_vigenere(input, scale)
 {
     // filter out non-alphabetic characters from ciphertext
     input = input.toUpperCase();
@@ -51,7 +51,8 @@ function crack_vigenere(input)
 	let best = init[1];
 
 	let currentVar = best;
-	while(n < ciphertext.length/10)
+	let max_iter = ciphertext.length * scale;
+	while(n < max_iter)
 	{
         n++;
 		currentVar = 0;
