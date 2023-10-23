@@ -68,10 +68,10 @@
 
     <p>
         Although character frequency analysis is effective, its probabilistic nature means it's not infallible.  
-        Longer keys will diminish the effectiveness of this method by reducing the amount of repetition in the ciphertext.
-        Keys that are longer than half the size of the ciphertext will have portions that weren't repeated when enciphering.
+        Longer keys will diminish the effectiveness of this method by reducing the amount of key repetition during the enciphering process.
+        Keys that are longer than half the size of the original plaintext will have portions that aren't repeated when enciphering.
         The corresponding portions of the ciphertext therefore cannot be determind with character frequency analysis.
-        In the case where the key length is greater than or equal to the plaintext length, there will be no repetition at all and character frequency analysis will fail completely.
+        In the case where the key length is greater than or equal to the plaintext length, there will be no key repetition at all and character frequency analysis on the resulting ciphertext will fail completely.
         This special case is known as a one-time pad, and it can provide perfect security as long as the key is not reused.
     </p>
 
