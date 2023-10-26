@@ -1,4 +1,4 @@
-let alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 function is_valid_key(key)
 {
@@ -38,9 +38,8 @@ function crack_vigenere(input, scale)
     // filter out non-alphabetic characters from ciphertext
     input = input.toUpperCase();
     let ciphertext = ""
-    for (var i = 0; i < input.length; i++)
+    for (const c of input)
     {
-        let c = input[i];
         if (alpha.includes(c))
             ciphertext += c;
     }
@@ -86,7 +85,7 @@ function frequency(o, e)
 function slice(ciphertext, n, start)
 {	
 	//each index corresponds to letter in alphabet = 0 = a, 1 = b, etc
-	let charfreqs = 
+	const charfreqs = 
 		[0.07984, 0.01511, 0.02504, 0.04260, 0.12452, 0.02262, 0.02013,
 		 0.06384, 0.0700, 0.00131, 0.00741, 0.03961, 0.02629, 0.06876,
 		 0.07691, 0.01741, 0.00107, 0.05912, 0.06333, 0.09058, 0.02844,
