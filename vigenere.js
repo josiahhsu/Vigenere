@@ -12,7 +12,7 @@ function convert_char(char, key, encipher)
         return char;
 
     shift *= encipher? 1 : -1;
-    
+
     let charPos = (alpha.length+alpha.indexOf(char)+shift) % alpha.length;
     return alpha.charAt(charPos);
 }
@@ -83,9 +83,9 @@ function frequency(o, e)
 }
 
 function slice(ciphertext, n, start)
-{	
+{
 	//each index corresponds to letter in alphabet = 0 = a, 1 = b, etc
-	const charfreqs = 
+	const charfreqs =
 		[0.07984, 0.01511, 0.02504, 0.04260, 0.12452, 0.02262, 0.02013,
 		 0.06384, 0.0700, 0.00131, 0.00741, 0.03961, 0.02629, 0.06876,
 		 0.07691, 0.01741, 0.00107, 0.05912, 0.06333, 0.09058, 0.02844,
@@ -106,8 +106,8 @@ function slice(ciphertext, n, start)
     {
         chars[i] /= count;
         best[1] += frequency(chars[i], charfreqs[i]);
-	}	
-	
+	}
+
 	//finds letter w/ lowest variance from standard frequency
 	for(var i = 1; i < 26; i++)
     {

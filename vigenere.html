@@ -11,7 +11,7 @@
 </head>
 <body>
     <div id="home"><a href="/github-pages/index.html">Back to Home</a></div>
-    <h2>Using the Vigenère Cipher</h2> 
+    <h2>Using the Vigenère Cipher</h2>
     <p>
         The Vigenère cipher is a basic substitution cipher that shifts the characters of the original plaintext using a key.
         This key is an alphabetic character sequence where each character represents a shift amount (A=0, B=1, C=2, etc.).
@@ -58,7 +58,7 @@
         <textarea id="ciphertext" placeholder="Enter ciphertext here."></textarea><br>
     </div>
 
-    <h2>Cracking the Vigenère Cipher</h2> 
+    <h2>Cracking the Vigenère Cipher</h2>
     <p>
         While the Vigenère cipher was once thought to be uncrackable, modern cryptanalysis can break the cipher fairly easily.
         Since the key replicates itself to match the length of the plaintext, shift amounts will occur in fixed intervals.
@@ -67,7 +67,7 @@
     </p>
 
     <p>
-        Although character frequency analysis is effective, its probabilistic nature means it's not infallible.  
+        Although character frequency analysis is effective, its probabilistic nature means it's not infallible.
         Longer keys will diminish the effectiveness of this method by reducing the amount of key repetition during the enciphering process.
         Keys that are longer than half the size of the original plaintext will have portions that aren't repeated when enciphering.
         The corresponding portions of the ciphertext therefore cannot be determind with character frequency analysis.
@@ -86,7 +86,7 @@
     <div>
         <b>Ciphertext:</b>
         <textarea id="ciphertext2" placeholder="Enter ciphertext to analyze here."></textarea><br>
-        
+
         <b>Max Key Scale Factor:</b>
         <span id="scale_value"></span><br>
         <script>
@@ -103,7 +103,7 @@
             }
         </script>
         <input type="range" id="scale" value=10 min=1 max=50 onchange="update_scale()"></input><br>
-        
+
         <script>
             function crack()
             {
@@ -114,7 +114,7 @@
                     key = crack_vigenere(ciphertext, get_scale());
                     plaintext = vigenere(ciphertext, key, false);
                 }
-                
+
                 document.getElementById("key2").value = key;
                 document.getElementById("plaintext2").value = plaintext;
             }
