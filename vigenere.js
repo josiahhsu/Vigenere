@@ -2,47 +2,49 @@ const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 function is_valid_key(key)
 {
-    return key.length > 0 && key.toUpperCase().match("[^A-Z]") == null;
+	return key.length > 0 && key.toUpperCase().match("[^A-Z]") == null;
 }
 
 function convert_char(char, key, encipher)
 {
-    let shift = alpha.indexOf(key.toUpperCase());
-    if (shift < 0)
-        return char;
+	let shift = alpha.indexOf(key.toUpperCase());
+	if (shift < 0)
+	return char;
 
-    shift *= encipher? 1 : -1;
+	shift *= encipher? 1 : -1;
 
-    let charPos = (alpha.length+alpha.indexOf(char)+shift) % alpha.length;
-    return alpha.charAt(charPos);
+	let charPos = (alpha.length+alpha.indexOf(char)+shift) % alpha.length;
+	return alpha.charAt(charPos);
 }
 
 function vigenere(plaintext, key, encipher)
 {
-    let result = "";
-    let pos = 0;
-    for (var i = 0; i < plaintext.length; i++)
-    {
-        let c = plaintext[i].toUpperCase();
-        if(alpha.includes(c)){ //only letters encrypted
+	let result = "";
+	let pos = 0;
+	for (var i = 0; i < plaintext.length; i++)
+	{
+		let c = plaintext[i].toUpperCase();
+		if(alpha.includes(c))
+		{
+			//only letters encrypted
 			c = convert_char(c, key[pos], encipher);
 			pos = ++pos % key.length;
 		}
-        result += c;
-    }
-    return result;
+		result += c;
+	}
+	return result;
 }
 
 function crack_vigenere(input, scale)
 {
-    // filter out non-alphabetic characters from ciphertext
-    input = input.toUpperCase();
-    let ciphertext = ""
-    for (const c of input)
-    {
-        if (alpha.includes(c))
-            ciphertext += c;
-    }
+	// filter out non-alphabetic characters from ciphertext
+	input = input.toUpperCase();
+	let ciphertext = ""
+	for (const c of input)
+	{
+		if (alpha.includes(c))
+		ciphertext += c;
+	}
 
 	let n = 1;
 	let init = slice(ciphertext, 1, 0);
@@ -53,24 +55,24 @@ function crack_vigenere(input, scale)
 	let max_iter = ciphertext.length * scale;
 	while(n < max_iter)
 	{
-        n++;
+		n++;
 		currentVar = 0;
 
 		//finds possible key using caesar slices
 		let currentKey = "";
 		for(var i = 0; i < n; i++)
-        {
+		{
 			let current = slice(ciphertext, n, i);
 			currentKey += current[0];
 			currentVar += current[1];
 		}
-        currentVar /= n;
+		currentVar /= n;
 
 		//compares to best variance
 		if(currentVar < best)
-        {
-            key = currentKey;
-            best = currentVar;
+		{
+			key = currentKey;
+			best = currentVar;
 		}
 	}
 
@@ -79,7 +81,7 @@ function crack_vigenere(input, scale)
 
 function frequency(o, e)
 {
-    return Math.pow(o - e,2);
+	return Math.pow(o - e,2);
 }
 
 function slice(ciphertext, n, start)
@@ -94,30 +96,31 @@ function slice(ciphertext, n, start)
 
 	//counts letter occurrences in ciphertext
 	let count = 0;
-    for (var i = start; i < ciphertext.length; i+=n)
-    {
-        chars[alpha.indexOf(ciphertext[i])]++;
-        count++;
+	for (var i = start; i < ciphertext.length; i+=n)
+	{
+		chars[alpha.indexOf(ciphertext[i])]++;
+		count++;
 	}
 
 	//finds frequencies in ciphertext and establishes baseline
 	let best = ['A', 0];
 	for(var i = 0; i < 26; i++)
-    {
-        chars[i] /= count;
-        best[1] += frequency(chars[i], charfreqs[i]);
+	{
+		chars[i] /= count;
+		best[1] += frequency(chars[i], charfreqs[i]);
 	}
 
 	//finds letter w/ lowest variance from standard frequency
 	for(var i = 1; i < 26; i++)
-    {
+	{
 		let current = 0.0;
 		for(var j = 0; j < 26; j++)
-        {
+		{
 			current += frequency(chars[(j+i)%26], charfreqs[j]);
 		}
+
 		if(current < best[1])
-        {
+		{
 			best[0] = alpha[i];
 			best[1] = current;
 		}
