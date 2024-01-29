@@ -1,10 +1,10 @@
 const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-class CharVar
+class Key
 {
-	constructor(char, variance)
+	constructor(key, variance)
 	{
-		this.char = char;
+		this.key = key;
 		this.var = variance;
 	}
 }
@@ -75,7 +75,7 @@ function crack_vigenere(input, min_len, max_len)
 		for (var i = 0; i < n; i++)
 		{
 			let current = slice(ciphertext, n, i);
-			currentKey += current.char;
+			currentKey += current.key;
 			currentVar += current.var;
 		}
 		currentVar /= n;
@@ -117,7 +117,7 @@ function slice(ciphertext, n, start)
 	}
 
 	//finds frequencies in ciphertext and establishes baseline
-	let best = new CharVar('A', 0);
+	let best = new Key('A', 0);
 	for (var i = 0; i < 26; i++)
 	{
 		chars[i] /= count;
@@ -135,7 +135,7 @@ function slice(ciphertext, n, start)
 
 		if (current < best.var)
 		{
-			best.char = alpha[i];
+			best.key = alpha[i];
 			best.var = current;
 		}
 	}
