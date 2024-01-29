@@ -50,18 +50,15 @@ function vigenere(plaintext, key, encipher)
 
 function crack_vigenere(input, min_len, max_len)
 {
+	let key = "";
+	let best = NaN;
 	let ciphertext = filter_nonalpha(input);
 
 	let n = Math.max(1, min_len);
-	let init = slice(ciphertext, n, 0);
-	let key = init[0];
-	let best = init[1];
-
 	let currentVar = best;
-	let max_iter = Math.min(max_len, ciphertext.length);
-	while (n < max_iter)
+	let max_iter = Math.min(max_len, ciphertext.length - 1);
+	while (n <= max_iter)
 	{
-		n++;
 		currentVar = 0;
 
 		//finds possible key using caesar slices
@@ -75,11 +72,13 @@ function crack_vigenere(input, min_len, max_len)
 		currentVar /= n;
 
 		//compares to best variance
-		if (currentVar < best)
+		if (isNaN(best) || currentVar < best)
 		{
 			key = currentKey;
 			best = currentVar;
 		}
+
+		n++;
 	}
 
 	return key;
