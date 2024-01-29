@@ -59,8 +59,7 @@ function vigenere(plaintext, key, encipher)
 
 function crack_vigenere(input, min_len, max_len)
 {
-	let key = "";
-	let best = NaN;
+	let best = null;
 	let ciphertext = filter_nonalpha(input);
 
 	let n = Math.max(1, min_len);
@@ -81,16 +80,13 @@ function crack_vigenere(input, min_len, max_len)
 		currentVar /= n;
 
 		//compares to best variance
-		if (isNaN(best) || currentVar < best)
-		{
-			key = currentKey;
-			best = currentVar;
-		}
+		if (best == null || currentVar < best.var)
+			best = new Key(currentKey, currentVar);
 
 		n++;
 	}
 
-	return key;
+	return best.key;
 }
 
 function frequency(o, e)
