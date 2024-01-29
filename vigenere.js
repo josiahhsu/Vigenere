@@ -9,12 +9,25 @@ function convert_char(char, key, encipher)
 {
 	let shift = alpha.indexOf(key.toUpperCase());
 	if (shift < 0)
-	return char;
+		return char;
 
 	shift *= encipher? 1 : -1;
 
 	let charPos = (alpha.length+alpha.indexOf(char)+shift) % alpha.length;
 	return alpha.charAt(charPos);
+}
+
+function filter_nonalpha(input)
+{
+	// filter out non-alphabetic characters from
+	input = input.toUpperCase();
+	let result = "";
+	for (const c of input)
+	{
+		if (alpha.includes(c))
+			result += c;
+	}
+	return result;
 }
 
 function vigenere(plaintext, key, encipher)
@@ -24,7 +37,7 @@ function vigenere(plaintext, key, encipher)
 	for (var i = 0; i < plaintext.length; i++)
 	{
 		let c = plaintext[i].toUpperCase();
-		if(alpha.includes(c))
+		if (alpha.includes(c))
 		{
 			//only letters encrypted
 			c = convert_char(c, key[pos], encipher);
@@ -35,32 +48,25 @@ function vigenere(plaintext, key, encipher)
 	return result;
 }
 
-function crack_vigenere(input, scale)
+function crack_vigenere(input, min_len, max_len)
 {
-	// filter out non-alphabetic characters from ciphertext
-	input = input.toUpperCase();
-	let ciphertext = ""
-	for (const c of input)
-	{
-		if (alpha.includes(c))
-		ciphertext += c;
-	}
+	let ciphertext = filter_nonalpha(input);
 
-	let n = 1;
-	let init = slice(ciphertext, 1, 0);
+	let n = Math.max(1, min_len);
+	let init = slice(ciphertext, n, 0);
 	let key = init[0];
 	let best = init[1];
 
 	let currentVar = best;
-	let max_iter = ciphertext.length * scale;
-	while(n < max_iter)
+	let max_iter = Math.min(max_len, ciphertext.length);
+	while (n < max_iter)
 	{
 		n++;
 		currentVar = 0;
 
 		//finds possible key using caesar slices
 		let currentKey = "";
-		for(var i = 0; i < n; i++)
+		for (var i = 0; i < n; i++)
 		{
 			let current = slice(ciphertext, n, i);
 			currentKey += current[0];
@@ -69,7 +75,7 @@ function crack_vigenere(input, scale)
 		currentVar /= n;
 
 		//compares to best variance
-		if(currentVar < best)
+		if (currentVar < best)
 		{
 			key = currentKey;
 			best = currentVar;
@@ -104,22 +110,22 @@ function slice(ciphertext, n, start)
 
 	//finds frequencies in ciphertext and establishes baseline
 	let best = ['A', 0];
-	for(var i = 0; i < 26; i++)
+	for (var i = 0; i < 26; i++)
 	{
 		chars[i] /= count;
 		best[1] += frequency(chars[i], charfreqs[i]);
 	}
 
 	//finds letter w/ lowest variance from standard frequency
-	for(var i = 1; i < 26; i++)
+	for (var i = 1; i < 26; i++)
 	{
 		let current = 0.0;
-		for(var j = 0; j < 26; j++)
+		for (var j = 0; j < 26; j++)
 		{
 			current += frequency(chars[(j+i)%26], charfreqs[j]);
 		}
 
-		if(current < best[1])
+		if (current < best[1])
 		{
 			best[0] = alpha[i];
 			best[1] = current;

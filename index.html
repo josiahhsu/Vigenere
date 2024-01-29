@@ -78,31 +78,26 @@
     <p>
         To decode a ciphertext, enter it below and click "Find key" to analyze the text.
         The most probable key and its corresponding deciphered text will be displayed below.
-        Since attempting analysis on larger key sizes becomes ineffective, a maximum key scale factor is provided to limit the search range.
-        This factor defines the maximum key length of analyzed keys relative to the length of the ciphertext.
-        Increasing this factor will allow for analysis on larger keys at the cost of a longer computation time.
+        For performance reasons, minimum and maximum key lengths can be specified to narrow the range of analysis.
+        By default, the minimum key length will be 1 and the maximum key length will be half the size of the ciphertext.
     </p>
 
     <div>
         <b>Ciphertext:</b>
         <textarea id="ciphertext2" placeholder="Enter ciphertext to analyze here."></textarea><br>
 
-        <b>Max Key Scale Factor:</b>
-        <span id="scale_value"></span><br>
         <script>
-            // function for defining the maximum number of times a given key
-            function update_scale()
+            function update_value(element)
             {
-                let n = document.getElementById("scale").value;
-                document.getElementById("scale_value").innerHTML = Number(n / 100);
-            }
-
-            function get_scale()
-            {
-                return Number(document.getElementById("scale_value").innerHTML);
+                // enforce non-negativity
+                if (element.value < 0)
+                    element.value = "";
             }
         </script>
-        <input type="range" id="scale" value=10 min=1 max=50 onchange="update_scale()"></input><br>
+        <b>Key length min:</b>
+        <input type="number" id="min_len" min=1 onchange="update_value(this)"></input>
+        <b>Key length max:</b>
+        <input type="number" id="max_len" min=1 onchange="update_value(this)"></input><br>
 
         <script>
             function crack()
@@ -111,15 +106,30 @@
                 let ciphertext = document.getElementById("ciphertext2").value;
                 if (ciphertext.length > 0)
                 {
-                    key = crack_vigenere(ciphertext, get_scale());
+                    let min_len = Number(document.getElementById("min_len").value);
+                    let max_len = Number(document.getElementById("max_len").value);
+
+                    // default to 1 if no min length specified
+                    if (min_len == 0)
+                        min_len = 1;
+
+                    // default to half of ciphertext length if no max length specified
+                    if (max_len == 0)
+                        max_len = filter_nonalpha(ciphertext).length / 2;
+
+                    if (min_len > max_len)
+                    {
+                        alert("ERROR: Min key length is greater than max key length");
+                        return;
+                    }
+
+                    key = crack_vigenere(ciphertext, min_len, max_len);
                     plaintext = vigenere(ciphertext, key, false);
                 }
 
                 document.getElementById("key2").value = key;
                 document.getElementById("plaintext2").value = plaintext;
             }
-
-            update_scale();
         </script>
         <button onclick="crack()">Find key</button><br><br>
 
