@@ -9,6 +9,16 @@ class Key
 	}
 }
 
+function is_upper(char)
+{
+	return alpha.includes(char);
+}
+
+function is_alpha(char)
+{
+	return is_upper(char.toUpperCase());
+}
+
 function is_valid_key(key)
 {
 	return key.length > 0 && key.toUpperCase().match("[^A-Z]") == null;
@@ -16,26 +26,30 @@ function is_valid_key(key)
 
 function convert_char(char, key, encipher)
 {
-	let shift = alpha.indexOf(key.toUpperCase());
+	let ref = alpha;
+	if (!is_upper(char))
+	{
+		ref = ref.toLowerCase();
+		key = key.toLowerCase();
+	}
+
+	let shift = ref.indexOf(key);
 	if (shift < 0)
 		return char;
 
 	shift *= encipher? 1 : -1;
 
-	let charPos = (alpha.length+alpha.indexOf(char)+shift) % alpha.length;
-	return alpha.charAt(charPos);
+	let charPos = (ref.length+ref.indexOf(char)+shift) % ref.length;
+	return ref.charAt(charPos);
 }
 
 function filter_nonalpha(input)
 {
-	// filter out non-alphabetic characters from
-	input = input.toUpperCase();
+	// filter out non-alphabetic characters from input
 	let result = "";
 	for (const c of input)
-	{
-		if (alpha.includes(c))
+		if (is_alpha(c))
 			result += c;
-	}
 	return result;
 }
 
@@ -43,10 +57,11 @@ function vigenere(plaintext, key, encipher)
 {
 	let result = "";
 	let pos = 0;
+	key = key.toUpperCase();
 	for (var i = 0; i < plaintext.length; i++)
 	{
-		let c = plaintext[i].toUpperCase();
-		if (alpha.includes(c))
+		let c = plaintext[i];
+		if (is_alpha(c))
 		{
 			//only letters encrypted
 			c = convert_char(c, key[pos], encipher);
@@ -60,7 +75,7 @@ function vigenere(plaintext, key, encipher)
 function crack_vigenere(input, min_len, max_len)
 {
 	let best = null;
-	let ciphertext = filter_nonalpha(input);
+	let ciphertext = filter_nonalpha(input).toUpperCase();
 
 	let n = Math.max(1, min_len);
 	let currentVar = best;
